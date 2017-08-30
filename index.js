@@ -55,7 +55,7 @@ export const VueHammer = {
             mc.add(recognizer)
           }
           // apply global options
-          const globalOptions = VueTouch.config[recognizerType]
+          const globalOptions = VueHammer.config[recognizerType]
           if (globalOptions) {
             that.guardDirections(globalOptions)
             recognizer.set(globalOptions)
@@ -83,7 +83,7 @@ export const VueHammer = {
         if (typeof binding.value !== 'function') {
           that.handler = null
           console.warn(
-            '[vue-hammer] invalid handler function for v-touch: ' +
+            '[vue-hammer] invalid handler function for v-hammer: ' +
             binding.arg
           )
         } else {

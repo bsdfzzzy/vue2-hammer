@@ -18,7 +18,7 @@ npm install vue2-hammer
 
 ```Javascript
 import { VueHammer } from 'vue2-hammer'
-Vue.use(VueTouch)
+Vue.use(VueHammer)
 ```
 
 ## Usage
