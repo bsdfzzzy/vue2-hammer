@@ -2,7 +2,7 @@
 
 Hammer.js wrapper for Vue to support some operation in the mobile
 
-This is a directive wrapper for Hammer.js 2.x.
+This is a directive wrapper for Hammer.js 2.x. And this repo'inspiration is from v-touch.
 
 ## Install
 
@@ -47,6 +47,12 @@ VueHammer.config.swipe = {
 ```
 
 See [Hammer.js documentation](http://hammerjs.github.io/getting-started/) for all available events.
+
+## Run the Example
+
+* Run ``` yarn ``` or ``` npm i ```
+* Run ``` yarn build ``` or ``` npm run build ```
+* Open the index.html in the example directory.
 
 ## License
 
