@@ -20,7 +20,7 @@
     "vue": "^2.4.2",
     "vue-loader": "^13.0.4",
     "vue-template-compiler": "^2.4.2",
-    "vue2-hammer": "^1.0.1",
+    "vue2-hammer": "^1.0.2",
     "webpack": "^3.5.5"
   },
   "repository": {
