@@ -1,14 +1,6 @@
 <template>
   <div id="app-content"
-    v-hammer:tap="test"
     v-hammer:pan="test"
-    v-hammer-options:pan="{ direction: 'up', threshold: 100 }"
-    v-hammer:press="test"
-    v-hammer:swipe="test"
-    v-hammer-options:swipe="{ direction: 'horizontal' }"
-    v-hammer:pinch="test"
-    v-hammer:rotate="test"
-    v-hammer:doubletap="test"
   >
     {{ msg }}
   </div>
@@ -23,7 +15,7 @@ export default {
     }
   },
   methods: {
-    test: function (e) {
+    test(e) {
       console.log(e)
     }
   },

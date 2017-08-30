@@ -71,7 +71,19 @@ export const VueHammer = {
         }
         that.recognizer = recognizer
 
-        update(el, binding)
+        // teardown old handler
+        if (that.handler) {
+          mc.off(event, that.handler)
+        }
+        if (typeof binding.value !== 'function') {
+          that.handler = null
+          console.warn(
+            '[vue-hammer] invalid handler function for v-hammer: ' +
+            binding.arg
+          )
+        } else {
+          mc.on(event, (that.handler = binding.value))
+        }
       },
       update(el, binding) {
         const mc = that.mc
