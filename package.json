@@ -1,0 +1,26 @@
+{
+  "name": "vue2-hammer",
+  "description": "Hammer.js wrapper for Vue 2.x to support some touching operation in the mobile.",
+  "version": "1.0.5",
+  "author": "sam@thinkingsam.cn",
+  "main": "index.js",
+  "scripts": {
+  },
+  "dependencies": {
+    "hammerjs": "^2.0.8"
+  },
+  "devDependencies": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lenvonsam/vue2-hammer.git"
+  },
+  "keywords": [
+    "vue2-hammer"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lenvonsam/vue2-hammer/issues"
+  },
+  "homepage": "https://github.com/lenvonsam/vue2-hammer#readme"
+}
