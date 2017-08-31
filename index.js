@@ -14,7 +14,7 @@ export const VueHammer = {
         if (!el.hammer) {
           el.hammer = new Hammer.Manager(el)
         }
-        const mc = that.mc = el.hammer
+        const mc = el.hammer
 
         // determine event type
         const event = binding.arg
@@ -69,45 +69,46 @@ export const VueHammer = {
             recognizer.set(localOptions)
           }
         }
-        that.recognizer = recognizer
-
-        // teardown old handler
-        if (that.handler) {
-          mc.off(event, that.handler)
+      },
+      inserted(el, binding) {
+        const mc = el.hammer
+        const event = binding.arg
+        if (mc.handler) {
+          mc.off(event, mc.handler)
         }
         if (typeof binding.value !== 'function') {
-          that.handler = null
+          mc.handler = null
           console.warn(
             '[vue-hammer] invalid handler function for v-hammer: ' +
             binding.arg
           )
         } else {
-          mc.on(event, (that.handler = binding.value))
+          mc.on(event, (mc.handler = binding.value))
         }
       },
       update(el, binding) {
-        const mc = that.mc
+        const mc = el.hammer
         const event = binding.arg
         // teardown old handler
-        if (that.handler) {
-          mc.off(event, that.handler)
+        if (mc.handler) {
+          mc.off(event, mc.handler)
         }
         if (typeof binding.value !== 'function') {
-          that.handler = null
+          mc.handler = null
           console.warn(
             '[vue-hammer] invalid handler function for v-hammer: ' +
             binding.arg
           )
         } else {
-          mc.on(event, (that.handler = binding.value))
+          mc.on(event, (mc.handler = binding.value))
         }
       },
       unbind(el, binding) {
-        if (that.handler) {
-          that.mc.off(binding.arg, that.handler)
+        if (mc.handler) {
+          el.hammer.off(binding.arg, mc.handler)
         }
-        if (!Object.keys(that.mc.handlers).length) {
-          that.mc.destroy()
+        if (!Object.keys(mc.handlers).length) {
+          el.hammer.destroy()
           el.hammer = null
         }
       },

@@ -1,10 +1,33 @@
 <template>
-  <div id="app-content"
-    v-hammer:pan="test"
-  >
+  <div>
+    <div
+      id="app-content"
+      v-hammer:pan="test"
+    >
+    </div>
     {{ msg }}
+    <div
+      class="content"
+      v-hammer:press="test2"
+      v-hammer:tap="test"
+    >
+    </div>
   </div>
 </template>
+
+<style>
+  #app-content {
+    width: 300px;
+    height: 200px;
+    background-color: #ddd;
+  }
+  .content {
+    width: 100px;
+    height: 200px;
+    background-color: red;
+  }
+</style>
+
 
 <script>
 export default {
@@ -17,6 +40,9 @@ export default {
   methods: {
     test(e) {
       console.log(e)
+    },
+    test2(e) {
+      console.log('aaaa')
     }
   },
 }

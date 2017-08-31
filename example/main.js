@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { VueHammer } from 'vue2-hammer'
+import { VueHammer } from '../index'
 import App from './App.vue'
 
 //use the plugin
