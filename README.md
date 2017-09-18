@@ -43,7 +43,7 @@ VueHammer.config.swipe = {
 ```
 
 ``` html
-<a v-touch:doubletap="onDoubleTap"></a>
+<a v-hammer:doubletap="onDoubleTap"></a>
 ```
 
 See [Hammer.js documentation](http://hammerjs.github.io/getting-started/) for all available events.
