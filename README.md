@@ -48,6 +48,17 @@ VueHammer.config.swipe = {
 
 See [Hammer.js documentation](http://hammerjs.github.io/getting-started/) for all available events.
 
+### Supported gesrtures and directions
+
+#### gestures
+tap, pan, pinch, press, rotate, swipe, doubletap
+
+#### directions
+up, down, left, right, horizontal, vertical, all
+
+#### Note
+Users can use both the gesture and the direction like `v-hammer:swipe.left`. But if your combination is not exist in the hammer, it is not support.
+
 ## Run the Example
 
 * Run ``` yarn ``` or ``` npm i ```
