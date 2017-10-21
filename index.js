@@ -1,7 +1,7 @@
 import Hammer from 'hammerjs'
 import { isEmpty } from 'lodash'
 
-const gestures = ['tap', 'pan', 'pinch', 'press', 'rotate', 'swipe']
+const gestures = ['tap', 'pan', 'pinch', 'press', 'rotate', 'swipe', 'doubletap']
 const directions = ['up', 'down', 'left', 'right', 'horizontal', 'vertical', 'all']
 
 export const VueHammer = {

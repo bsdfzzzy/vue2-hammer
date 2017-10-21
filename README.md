@@ -28,7 +28,7 @@ Vue.use(VueHammer)
 ``` html
 <a v-hammer:tap="onTap">Tap me!</a>
 
-<div v-hammer:swipeleft="onSwipeLeft">Swipe me!</div>
+<div v-hammer:swipe.left="onSwipeLeft">Swipe me!</div>
 ```
 
 #### Configuring Recognizer Options
