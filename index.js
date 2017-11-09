@@ -104,6 +104,7 @@ export const VueHammer = {
         }
       },
       unbind(el, binding) {
+        const mc = el.hammer
         if (mc.handler) {
           el.hammer.off(binding.arg, mc.handler)
         }
