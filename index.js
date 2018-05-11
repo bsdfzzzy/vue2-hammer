@@ -23,7 +23,7 @@ export const VueHammer = {
         that.config[event] = {}
 
         const direction = binding.modifiers
-        if (Object.keys(direction)) {
+        if (Object.keys(direction).length) {
           Object.keys(direction).map(keyName => {
             that.config[event].direction = String(keyName)
           })
