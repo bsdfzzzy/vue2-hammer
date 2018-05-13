@@ -1,5 +1,4 @@
 import Hammer from 'hammerjs'
-import { isEmpty } from 'lodash'
 
 const gestures = ['tap', 'pan', 'pinch', 'press', 'rotate', 'swipe', 'doubletap']
 const directions = ['up', 'down', 'left', 'right', 'horizontal', 'vertical', 'all']
@@ -24,7 +23,7 @@ export const VueHammer = {
         that.config[event] = {}
 
         const direction = binding.modifiers
-        if (!isEmpty(direction)) {
+        if (Object.keys(direction).length) {
           Object.keys(direction).map(keyName => {
             that.config[event].direction = String(keyName)
           })
