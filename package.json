@@ -3,9 +3,10 @@
   "description": "Hammer.js wrapper for Vue 2.x to support some touching operation in the mobile.",
   "version": "2.0.0",
   "author": "bsdfzzzy@gmail.com",
-  "main": "index.js",
+  "main": "index.min.js",
   "scripts": {
-    "build": "./node_modules/.bin/webpack --config webpack.config.js"
+    "build": "./node_modules/.bin/webpack --config webpack.config.js",
+    "prepub": "babel index.js --out-file index.min.js && uglifyjs index.min.js -o index.min.js"
   },
   "dependencies": {
     "hammerjs": "^2.0.8"

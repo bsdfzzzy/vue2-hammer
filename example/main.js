@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import {
   VueHammer
-} from '../index'
+} from '../index.min'
 import App from './App.vue'
 
 //use the plugin
