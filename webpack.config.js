@@ -1,5 +1,6 @@
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const path = require('path')
 
 module.exports = {
@@ -12,21 +13,31 @@ module.exports = {
     extensions: ['.js']
   },
   module: {
-    loaders: [
-      {
+    rules: [{
         test: /.js$/,
-        loader: 'babel-loader',
+        use: 'babel-loader',
         exclude: /node_modules/
       },
       {
         test: /.vue$/,
-        loader: 'vue-loader',
+        use: 'vue-loader',
         exclude: /node_modules/
+      },
+      {
+        test: /\.css$/,
+        use: [
+          'vue-style-loader',
+          'css-loader'
+        ]
       }
     ]
   },
   plugins: [
-    // new BundleAnalyzerPlugin(),
-    // new UglifyJSPlugin()
+    new VueLoaderPlugin()
   ],
+  optimization: {
+    minimizer: [
+      new UglifyJsPlugin()
+    ]
+  }
 }
