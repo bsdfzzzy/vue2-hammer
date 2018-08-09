@@ -2,7 +2,7 @@
   <div>
     <div
       id="app-content"
-      v-hammer:pan="test"
+      v-hammer:pan.left.right="test"
     >
     </div>
     {{ msg }}
@@ -10,40 +10,41 @@
       class="content"
       v-hammer:press="test2"
       v-hammer:tap="test"
+      v-hammer:pan.left="test"
     >
     </div>
   </div>
 </template>
 
 <style>
-  #app-content {
-    width: 300px;
-    height: 200px;
-    background-color: #ddd;
-  }
-  .content {
-    width: 100px;
-    height: 200px;
-    background-color: red;
-  }
+#app-content {
+  width: 300px;
+  height: 200px;
+  background-color: #ddd;
+}
+.content {
+  width: 100px;
+  height: 200px;
+  background-color: red;
+}
 </style>
 
 
 <script>
 export default {
-  name: 'app',
-  data () {
+  name: "app",
+  data() {
     return {
-      msg: 'Welcome to Your Vue.js App'
-    }
+      msg: "Welcome to Your Vue.js App"
+    };
   },
   methods: {
     test(e) {
-      console.log(e)
+      console.log(e);
     },
     test2(e) {
-      console.log('aaaa')
+      console.log("aaaa");
     }
-  },
-}
+  }
+};
 </script>

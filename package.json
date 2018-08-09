@@ -1,13 +1,14 @@
 {
   "name": "vue2-hammer",
   "description": "Hammer.js wrapper for Vue 2.x to support some touching operation in the mobile.",
-  "version": "1.0.7",
+  "version": "2.0.0",
   "author": "bsdfzzzy@gmail.com",
   "main": "index.js",
   "scripts": {
     "build": "./node_modules/.bin/webpack --config webpack.config.js"
   },
   "dependencies": {
+    "@types/hammerjs": "^2.0.35",
     "hammerjs": "^2.0.8"
   },
   "devDependencies": {

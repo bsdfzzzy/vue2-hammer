@@ -1,15 +1,15 @@
 import Hammer from 'hammerjs'
+import Vue from 'vue'
 
-const gestures = ['tap', 'pan', 'pinch', 'press', 'rotate', 'swipe', 'doubletap']
+const gestures = ['tap', 'pan', 'pinch', 'press', 'rotate', 'swipe']
 const directions = ['up', 'down', 'left', 'right', 'horizontal', 'vertical', 'all']
 
 export const VueHammer = {
   config: {},
   customEvents: {},
-  install: function(Vue) {
-    const that = this
+  install() {
     Vue.directive('hammer', {
-      bind(el, binding) {
+      bind: (el, binding) => {
         if (!el.hammer) {
           el.hammer = new Hammer.Manager(el)
         }
@@ -20,22 +20,28 @@ export const VueHammer = {
         if (!event) {
           console.warn('[vue-hammer] event type argument is required.')
         }
-        that.config[event] = {}
+        el.__hammerConfig = el.__hammerConfig || {}
+        el.__hammerConfig[event] = {}
 
         const direction = binding.modifiers
         if (Object.keys(direction).length) {
-          Object.keys(direction).map(keyName => {
-            that.config[event].direction = String(keyName)
-          })
+          Object.keys(direction)
+            .filter(keyName => binding.modifiers[keyName])
+            .forEach(keyName => {
+              const elDirectionArray = el.__hammerConfig[event].direction || [];
+              if (elDirectionArray.indexOf(keyName) === -1) {
+                elDirectionArray.push(String(keyName))
+              }
+            })
         }
 
         let recognizerType, recognizer
 
-        if (that.customEvents[event]) {
+        if (this.customEvents[event]) {
           // custom event
-          const custom = that.customEvents[event]
+          const custom = this.customEvents[event]
           recognizerType = custom.type
-          recognizer = new Hammer[that.capitalize(recognizerType)](custom)
+          recognizer = new Hammer[this.capitalize(recognizerType)](custom)
           recognizer.recognizeWith(mc.recognizers)
           mc.add(recognizer)
         } else {
@@ -48,15 +54,15 @@ export const VueHammer = {
           recognizer = mc.get(recognizerType)
           if (!recognizer) {
             // add recognizer
-            recognizer = new Hammer[that.capitalize(recognizerType)]()
+            recognizer = new Hammer[this.capitalize(recognizerType)]()
             // make sure multiple recognizers work together...
             recognizer.recognizeWith(mc.recognizers)
             mc.add(recognizer)
           }
           // apply global options
-          const globalOptions = VueHammer.config[recognizerType]
+          const globalOptions = this.config[recognizerType]
           if (globalOptions) {
-            that.guardDirections(globalOptions)
+            this.guardDirections(globalOptions)
             recognizer.set(globalOptions)
           }
           // apply local options
@@ -64,12 +70,12 @@ export const VueHammer = {
             el.hammerOptions &&
             el.hammerOptions[recognizerType]
           if (localOptions) {
-            that.guardDirections(localOptions)
+            this.guardDirections(localOptions)
             recognizer.set(localOptions)
           }
         }
       },
-      inserted(el, binding) {
+      inserted: (el, binding) => {
         const mc = el.hammer
         const event = binding.arg
         if (mc.handler) {
@@ -85,7 +91,7 @@ export const VueHammer = {
           mc.on(event, (mc.handler = binding.value))
         }
       },
-      update(el, binding) {
+      componentUpdated: (el, binding) => {
         const mc = el.hammer
         const event = binding.arg
         // teardown old handler
@@ -102,7 +108,7 @@ export const VueHammer = {
           mc.on(event, (mc.handler = binding.value))
         }
       },
-      unbind(el, binding) {
+      unbind: (el, binding) => {
         const mc = el.hammer
         if (mc.handler) {
           el.hammer.off(binding.arg, mc.handler)
@@ -129,4 +135,3 @@ export const VueHammer = {
     return str.charAt(0).toUpperCase() + str.slice(1)
   },
 }
-
