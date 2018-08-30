@@ -4,6 +4,8 @@ Hammer.js wrapper for Vue to support some operation in the mobile
 
 This is a directive wrapper for Hammer.js 2.x. And this repo'inspiration is from v-touch.
 
+If you want to find a same wrapper for Angular4+, you can have a look at [ngx-hammer](https://github.com/bsdfzzzy/ngx-hammer)
+
 ## Install
 
 > This plugin supports Vue >= 2.0.
