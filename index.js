@@ -2,7 +2,7 @@ import Hammer from 'hammerjs'
 import Vue from 'vue'
 
 const gestures = ['tap', 'pan', 'pinch', 'press', 'rotate', 'swipe']
-const subGestures = ['panstart', 'panend']
+const subGestures = ['panstart', 'panend', 'panmove', 'pancancel', 'pinchstart', 'pinchmove', 'pinchend', 'pinchcancel', 'pinchin', 'pinchout', 'pressup', 'rotatestart', 'rotatemove', 'rotateend', 'rotatecancel']
 const directions = ['up', 'down', 'left', 'right', 'horizontal', 'vertical', 'all']
 
 export const VueHammer = {
@@ -55,8 +55,16 @@ export const VueHammer = {
             console.warn('[vue-hammer] invalid event type: ' + event)
             return
           }
+          if (subGesturesType && el.__hammerConfig[subGesturesType].direction.length !== 0) {
+            console.warn('[vue-hammer] ' + subGesturesType + ' should not have directions')
+          }
           if (!recognizerType) {
             return
+          }
+          if (recognizerType === 'tap' || recognizerType === 'pinch' || recognizerType === 'press' || recognizerType === 'rotate') {
+            if (el.__hammerConfig[recognizerType].direction.length !== 0) {
+              throw Error('[vue-hammer] ' + recognizerType + ' should not have directions')
+            }
           }
           recognizer = mc.get(recognizerType)
           if (!recognizer) {
@@ -84,7 +92,7 @@ export const VueHammer = {
       inserted: (el, binding) => {
         const mc = el.hammer
         const event = binding.arg
-        const eventWithDir = this.buildEventWithDirections(event, el.__hammerConfig[event].direction)
+        const eventWithDir = subGestures.find(subGes => subGes === event) ? event : this.buildEventWithDirections(event, el.__hammerConfig[event].direction)
         if (mc.handler) {
           mc.off(eventWithDir, mc.handler)
         }
@@ -101,7 +109,7 @@ export const VueHammer = {
       componentUpdated: (el, binding) => {
         const mc = el.hammer
         const event = binding.arg
-        const eventWithDir = this.buildEventWithDirections(event, el.__hammerConfig[event].direction)
+        const eventWithDir = subGestures.find(subGes => subGes === event) ? event : this.buildEventWithDirections(event, el.__hammerConfig[event].direction)
         // teardown old handler
         if (mc.handler) {
           mc.off(eventWithDir, mc.handler)
@@ -119,7 +127,7 @@ export const VueHammer = {
       unbind: (el, binding) => {
         const mc = el.hammer
         const event = binding.arg
-        const eventWithDir = this.buildEventWithDirections(event, el.__hammerConfig[event].direction)
+        const eventWithDir = subGestures.find(subGes => subGes === event) ? event : this.buildEventWithDirections(event, el.__hammerConfig[event].direction)
         if (mc.handler) {
           el.hammer.off(eventWithDir, mc.handler)
         }
@@ -142,10 +150,29 @@ export const VueHammer = {
     }
   },
   buildEventWithDirections(eventName, directionArray) {
-    if (directionArray.length === 0) {
+    const f = {}
+    directionArray.forEach(dir => {
+      dir = dir.toLowerCase()
+      if (dir === 'horizontal') {
+        f.left = 1
+        f.right = 1
+      } else if (dir === 'vertical') {
+        f.up = 1
+        f.down = 1
+      } else if (dir === 'all') {
+        f.left = 1
+        f.right = 1
+        f.up = 1
+        f.down = 1
+      } else {
+        f[dir] = 1
+      }
+    })
+    const _directionArray = Object.keys(f)
+    if (_directionArray.length === 0) {
       return eventName
     }
-    const eventWithDirArray = directionArray.map(dir => {
+    const eventWithDirArray = _directionArray.map(dir => {
       return eventName + dir
     })
     return eventWithDirArray.join(' ')

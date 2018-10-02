@@ -2,7 +2,7 @@
   <div>
     <div
       id="app-content"
-      v-hammer:swipe.right="test"
+      v-hammer:swipe.horizontal="test"
     >
     </div>
     {{ msg }}
@@ -11,6 +11,8 @@
       v-hammer:press="test2"
       v-hammer:tap="test"
       v-hammer:pan.left="test"
+      v-hammer:panstart="test2"
+      v-hammer:panend="test2"
     >
     </div>
   </div>
