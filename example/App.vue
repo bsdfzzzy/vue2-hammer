@@ -2,7 +2,7 @@
   <div>
     <div
       id="app-content"
-      v-hammer:pan.left.right="test"
+      v-hammer:swipe.right="test"
     >
     </div>
     {{ msg }}
@@ -32,10 +32,10 @@
 
 <script>
 export default {
-  name: "app",
+  name: 'app',
   data() {
     return {
-      msg: "Welcome to Your Vue.js App"
+      msg: 'Welcome to Your Vue.js App'
     };
   },
   methods: {
@@ -43,7 +43,7 @@ export default {
       console.log(e);
     },
     test2(e) {
-      console.log("aaaa");
+      console.log('aaaa');
     }
   }
 };

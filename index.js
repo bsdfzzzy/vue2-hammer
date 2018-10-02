@@ -2,6 +2,7 @@ import Hammer from 'hammerjs'
 import Vue from 'vue'
 
 const gestures = ['tap', 'pan', 'pinch', 'press', 'rotate', 'swipe']
+const subGestures = ['panstart', 'panend']
 const directions = ['up', 'down', 'left', 'right', 'horizontal', 'vertical', 'all']
 
 export const VueHammer = {
@@ -24,18 +25,20 @@ export const VueHammer = {
         el.__hammerConfig[event] = {}
 
         const direction = binding.modifiers
+        el.__hammerConfig[event].direction = el.__hammerConfig[event].direction || []
         if (Object.keys(direction).length) {
           Object.keys(direction)
             .filter(keyName => binding.modifiers[keyName])
             .forEach(keyName => {
-              const elDirectionArray = el.__hammerConfig[event].direction || [];
+              const elDirectionArray = el.__hammerConfig[event].direction
               if (elDirectionArray.indexOf(keyName) === -1) {
                 elDirectionArray.push(String(keyName))
               }
             })
         }
 
-        let recognizerType, recognizer
+        let recognizerType,
+          recognizer
 
         if (this.customEvents[event]) {
           // custom event
@@ -47,8 +50,12 @@ export const VueHammer = {
         } else {
           // built-in event
           recognizerType = gestures.find(gesture => gesture === event)
-          if (!recognizerType) {
+          const subGesturesType = subGestures.find(gesture => gesture === event)
+          if (!recognizerType && !subGesturesType) {
             console.warn('[vue-hammer] invalid event type: ' + event)
+            return
+          }
+          if (!recognizerType) {
             return
           }
           recognizer = mc.get(recognizerType)
@@ -66,8 +73,7 @@ export const VueHammer = {
             recognizer.set(globalOptions)
           }
           // apply local options
-          const localOptions =
-            el.hammerOptions &&
+          const localOptions = el.hammerOptions &&
             el.hammerOptions[recognizerType]
           if (localOptions) {
             this.guardDirections(localOptions)
@@ -78,8 +84,9 @@ export const VueHammer = {
       inserted: (el, binding) => {
         const mc = el.hammer
         const event = binding.arg
+        const eventWithDir = this.buildEventWithDirections(event, el.__hammerConfig[event].direction)
         if (mc.handler) {
-          mc.off(event, mc.handler)
+          mc.off(eventWithDir, mc.handler)
         }
         if (typeof binding.value !== 'function') {
           mc.handler = null
@@ -88,15 +95,16 @@ export const VueHammer = {
             binding.arg
           )
         } else {
-          mc.on(event, (mc.handler = binding.value))
+          mc.on(eventWithDir, (mc.handler = binding.value))
         }
       },
       componentUpdated: (el, binding) => {
         const mc = el.hammer
         const event = binding.arg
+        const eventWithDir = this.buildEventWithDirections(event, el.__hammerConfig[event].direction)
         // teardown old handler
         if (mc.handler) {
-          mc.off(event, mc.handler)
+          mc.off(eventWithDir, mc.handler)
         }
         if (typeof binding.value !== 'function') {
           mc.handler = null
@@ -105,13 +113,15 @@ export const VueHammer = {
             binding.arg
           )
         } else {
-          mc.on(event, (mc.handler = binding.value))
+          mc.on(eventWithDir, (mc.handler = binding.value))
         }
       },
       unbind: (el, binding) => {
         const mc = el.hammer
+        const event = binding.arg
+        const eventWithDir = this.buildEventWithDirections(event, el.__hammerConfig[event].direction)
         if (mc.handler) {
-          el.hammer.off(binding.arg, mc.handler)
+          el.hammer.off(eventWithDir, mc.handler)
         }
         if (!Object.keys(mc.handlers).length) {
           el.hammer.destroy()
@@ -130,6 +140,15 @@ export const VueHammer = {
         console.warn('[vue-hammer] invalid direction: ' + dir)
       }
     }
+  },
+  buildEventWithDirections(eventName, directionArray) {
+    if (directionArray.length === 0) {
+      return eventName
+    }
+    const eventWithDirArray = directionArray.map(dir => {
+      return eventName + dir
+    })
+    return eventWithDirArray.join(' ')
   },
   capitalize(str) {
     return str.charAt(0).toUpperCase() + str.slice(1)
