@@ -1,5 +1,4 @@
 import Hammer from 'hammerjs'
-import Vue from 'vue'
 
 const gestures = ['tap', 'pan', 'pinch', 'press', 'rotate', 'swipe']
 const subGestures = ['panstart', 'panend', 'panmove', 'pancancel', 'pinchstart', 'pinchmove', 'pinchend', 'pinchcancel', 'pinchin', 'pinchout', 'pressup', 'rotatestart', 'rotatemove', 'rotateend', 'rotatecancel']
@@ -8,7 +7,7 @@ const directions = ['up', 'down', 'left', 'right', 'horizontal', 'vertical', 'al
 export const VueHammer = {
   config: {},
   customEvents: {},
-  install() {
+  install(Vue) {
     Vue.directive('hammer', {
       bind: (el, binding) => {
         if (!el.hammer) {
