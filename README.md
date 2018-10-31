@@ -47,7 +47,7 @@ VueHammer.config.swipe = {
 ```html
 <a
   v-hammer:tap="onTap"
-  v-hammer:pan:horizontal="onPanHorizontal"
+  v-hammer:pan.horizontal="onPanHorizontal"
   v-hammer:panstart="onPanStart"
   v-hammer:panend="onPanEnd"
   v-hammer:press="onPress"
