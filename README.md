@@ -32,9 +32,7 @@ Vue.use(VueHammer)
 
 <div v-hammer:swipe.left="onSwipeLeft">Swipe me!</div>
 
-<div v-hammer:swipe.left="function(){ onSwipeLeft(item, i) }">Swipe me!</div>
-or more concise
-<div v-hammer:swipe.left="()=>onSwipeLeft(item, i)">Swipe me!</div>
+<div v-hammer:swipe.left="(event)=> onSwipeLeft(event, item, i)">Swipe me!</div>
 ```
 
 #### Configuring Recognizer Options
