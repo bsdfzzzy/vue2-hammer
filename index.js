@@ -46,6 +46,17 @@ export const VueHammer = {
           recognizer = new Hammer[this.capitalize(recognizerType)](custom)
           recognizer.recognizeWith(mc.recognizers)
           mc.add(recognizer)
+
+          // add requireFailure for custom event
+          if (custom.requireFailure) {
+            let requiredFailures = mc.recognizers.filter(
+              recognizerItem =>
+                custom.requireFailure.includes(recognizerItem.options.event)
+            );
+            requiredFailures.forEach(
+              requiredFailure => recognizer.requireFailure(requiredFailure)
+            )
+          }
         } else {
           // built-in event
           recognizerType = gestures.find(gesture => gesture === event)
