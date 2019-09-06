@@ -73,6 +73,14 @@ export const VueHammer = {
             recognizer.recognizeWith(mc.recognizers)
             mc.add(recognizer)
           }
+          // set direction
+          if(el.__hammerConfig[recognizerType].direction.length === 1){
+            let options = {
+              direction: el.__hammerConfig[recognizerType].direction[0]
+            }
+            this.guardDirections(options)
+            recognizer.set(options)
+          }
           // apply global options
           const globalOptions = this.config[recognizerType]
           if (globalOptions) {
