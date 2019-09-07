@@ -15,6 +15,14 @@
       v-hammer:panend="test2"
     >
     </div>
+    <div class="scrollable-wrapper">
+      <div 
+        class="scrollable"
+        v-hammer:swipe.horizontal="test"
+      >
+        scrollable
+      </div>
+    </div>
   </div>
 </template>
 
@@ -28,6 +36,15 @@
   width: 100px;
   height: 200px;
   background-color: red;
+}
+.scrollable-wrapper{
+  width: 200px;
+  height: 200px;
+  overflow: scroll;
+}
+.scrollable{
+  height: 600px;
+  background: aqua;
 }
 </style>
 
