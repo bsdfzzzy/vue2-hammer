@@ -130,10 +130,20 @@ export const VueHammer = {
         if (mc.handler) {
           el.hammer.off(eventWithDir, mc.handler)
         }
-        if (!Object.keys(mc.handlers).length) {
+        let eventkeys = Object.keys(el.hammer.handlers)
+        let isDestroy = true
+        eventkeys.forEach(element => {
+          if (mc.handlers[element].length > 0)
+          {
+            isDestroy = false
+          }
+        })
+        if (isDestroy)
+        { 
+          console.warn('[vue-hammer] unbind destroy')
           el.hammer.destroy()
           el.hammer = null
-        }
+        } 
       },
     })
   },
