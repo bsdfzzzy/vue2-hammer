@@ -11,7 +11,8 @@ export const VueHammer = {
     Vue.directive('hammer', {
       bind: (el, binding) => {
         if (!el.hammer) {
-          el.hammer = new Hammer.Manager(el)
+          el.hammer = new Hammer.Manager(el, { inputClass: Hammer.TouchMouseInput })
+          el.hammer.domEvents = true
         }
         const mc = el.hammer
 
