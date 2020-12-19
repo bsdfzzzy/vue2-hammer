@@ -1,5 +1,5 @@
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const TerserPlugin = require("terser-webpack-plugin");
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const path = require('path')
 
@@ -36,8 +36,9 @@ module.exports = {
     new VueLoaderPlugin()
   ],
   optimization: {
+    minimize: true,
     minimizer: [
-      new UglifyJsPlugin()
+      new TerserPlugin()
     ]
   }
 }
