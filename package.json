@@ -12,7 +12,7 @@
     "prepub": "babel index.js --out-file index.min.js && uglifyjs index.min.js -o index.min.js"
   },
   "dependencies": {
-    "@babel/runtime-corejs2": "^7.0.0",
+    "@babel/runtime-corejs3": "^7.0.0",
     "hammerjs": "^2.0.8"
   },
   "devDependencies": {
