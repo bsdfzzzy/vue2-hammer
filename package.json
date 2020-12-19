@@ -9,7 +9,7 @@
   },
   "scripts": {
     "build": "./node_modules/.bin/webpack --config webpack.config.js",
-    "prepub": "babel index.js --out-file index.min.js && uglifyjs index.min.js -o index.min.js"
+    "prepub": "babel index.js --out-file index.min.js"
   },
   "dependencies": {
     "@babel/runtime-corejs3": "^7.0.0",
@@ -22,7 +22,7 @@
     "@babel/preset-env": "^7.0.0",
     "babel-loader": "^8.0.0",
     "css-loader": "^1.0.0",
-    "uglifyjs-webpack-plugin": "^1.2.7",
+    "terser-webpack-plugin": "^4.0.0",
     "vue": "^2.4.2",
     "vue-loader": "^15.3.0",
     "vue-style-loader": "^4.1.1",
