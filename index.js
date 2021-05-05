@@ -14,7 +14,8 @@ export const VueHammer = {
           el.hammer = new Hammer.Manager(el)
         }
         const mc = el.hammer
-
+        // Disabled hammer
+        mc.set({ enable: el.getAttribute('disabled') !== 'disabled' });
         // determine event type
         const event = binding.arg
         if (!event) {
@@ -90,6 +91,8 @@ export const VueHammer = {
       },
       inserted: (el, binding) => {
         const mc = el.hammer
+        // Disabled hammer
+        mc.set({ enable: el.getAttribute('disabled') !== 'disabled' });
         const event = binding.arg
         const eventWithDir = subGestures.find(subGes => subGes === event) ? event : this.buildEventWithDirections(event, el.__hammerConfig[event].direction)
         if (mc.handler) {
@@ -107,6 +110,8 @@ export const VueHammer = {
       },
       componentUpdated: (el, binding) => {
         const mc = el.hammer
+        // Disabled hammer
+        mc.set({ enable: el.getAttribute('disabled') !== 'disabled' });
         const event = binding.arg
         const eventWithDir = subGestures.find(subGes => subGes === event) ? event : this.buildEventWithDirections(event, el.__hammerConfig[event].direction)
         // teardown old handler
@@ -125,6 +130,8 @@ export const VueHammer = {
       },
       unbind: (el, binding) => {
         const mc = el.hammer
+        // Disabled hammer
+        mc.set({ enable: el.getAttribute('disabled') !== 'disabled' });
         const event = binding.arg
         const eventWithDir = subGestures.find(subGes => subGes === event) ? event : this.buildEventWithDirections(event, el.__hammerConfig[event].direction)
         if (mc.handler) {

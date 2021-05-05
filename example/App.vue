@@ -8,6 +8,7 @@
     {{ msg }}
     <div
       class="content"
+      :disabled="disable"
       v-hammer:press="test2"
       v-hammer:tap="test"
       v-hammer:pan.left="test"
@@ -15,6 +16,7 @@
       v-hammer:panend="test2"
     >
     </div>
+    <button @click="toggleDisableState">{{ disable ? 'Enable' : 'Disable' }} Tap</button>
   </div>
 </template>
 
@@ -37,7 +39,8 @@ export default {
   name: 'app',
   data() {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'Welcome to Your Vue.js App',
+    disable: false
     };
   },
   methods: {
@@ -46,6 +49,9 @@ export default {
     },
     test2(e) {
       console.log('aaaa');
+    },
+    toggleDisableState() {
+      this.disable = !this.disable
     }
   }
 };
